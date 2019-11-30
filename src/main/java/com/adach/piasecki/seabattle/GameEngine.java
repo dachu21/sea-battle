@@ -3,29 +3,28 @@ package com.adach.piasecki.seabattle;
 import com.adach.piasecki.seabattle.input.Command;
 import com.adach.piasecki.seabattle.input.InputStrategy;
 import com.adach.piasecki.seabattle.model.Board;
-import com.adach.piasecki.seabattle.output.DrawStrategy;
+import com.adach.piasecki.seabattle.output.OutputStrategy;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class GameEngine {
+class GameEngine {
 
     private final Board board;
     private final InputStrategy inputStrategy;
-    private final DrawStrategy drawStrategy;
+    private final OutputStrategy outputStrategy;
 
-    public void start() {
-        drawStrategy.draw(board);
+    void run() {
+        outputStrategy.draw(board);
 
         boolean finished = false;
-
         while (!finished) {
-            Command command = inputStrategy.waitForInput();
+            final Command command = inputStrategy.waitForInput();
             finished = updateBoard(command);
-            drawStrategy.draw(board);
+            outputStrategy.draw(board);
         }
     }
 
-    private boolean updateBoard(Command command) {
+    private boolean updateBoard(final Command command) {
         return false;
     }
 }

@@ -2,14 +2,14 @@ package com.adach.piasecki.seabattle.output;
 
 import com.adach.piasecki.seabattle.model.Board;
 
-public class ConsoleDrawStrategy implements DrawStrategy {
-
-    private int i = 0;
+public class ConsoleOutputStrategy implements OutputStrategy {
 
     private static final int A_ASCII_CODE = 65;
+    private static final String BLANK_SPACE = " ";
+    private int i = 0;
 
     @Override
-    public void draw(Board board) {
+    public void draw(final Board board) {
         clearScreen();
         println("test " + i);
         i++;
@@ -17,24 +17,31 @@ public class ConsoleDrawStrategy implements DrawStrategy {
         final int boardWidth = board.getWidth();
         final int boardHeight = board.getHeight();
 
-        print("  ");
+        print(BLANK_SPACE + BLANK_SPACE);
         for (int column = 0; column < boardWidth; column++) {
             print(asciiToString(column + A_ASCII_CODE));
             if (column != boardWidth - 1) {
-                print(" ");
+                print(BLANK_SPACE);
             }
         }
-        println("");
+        println();
         for (int row = 0; row < boardHeight; row++) {
-            print(Integer.toString(row + 1) + " ");
+            print((row + 1) + BLANK_SPACE);
             for (int column = 0; column < boardWidth; column++) {
                 print("x");
                 if (column != boardWidth - 1) {
-                    print(" ");
+                    print(BLANK_SPACE);
                 }
             }
-            println("");
+            println();
         }
+    }
+
+    @Override
+    public void displayMessage(final String message) {
+        println();
+        println(message);
+        println();
     }
 
     private void clearScreen() {
@@ -48,6 +55,10 @@ public class ConsoleDrawStrategy implements DrawStrategy {
 
     private void println(final String text) {
         System.out.println(text);
+    }
+
+    private void println() {
+        println("");
     }
 
     private String asciiToString(final int code) {

@@ -3,27 +3,29 @@ package com.adach.piasecki.seabattle;
 import com.adach.piasecki.seabattle.initializer.BoardInitializeStrategy;
 import com.adach.piasecki.seabattle.input.InputStrategy;
 import com.adach.piasecki.seabattle.model.Board;
-import com.adach.piasecki.seabattle.output.DrawStrategy;
+import com.adach.piasecki.seabattle.output.OutputStrategy;
 
-public class Game {
+class Game {
 
     private final InputStrategy inputStrategy;
-    private final DrawStrategy drawStrategy;
+    private final OutputStrategy outputStrategy;
     private GameEngine gameEngine;
 
-    Game(InputStrategy inputStrategy, DrawStrategy drawStrategy, BoardInitializeStrategy propertiesBoardInitializeStrategy) {
+    Game(final InputStrategy inputStrategy, final OutputStrategy outputStrategy,
+         final BoardInitializeStrategy propertiesBoardInitializeStrategy) {
         this.inputStrategy = inputStrategy;
-        this.drawStrategy = drawStrategy;
+        this.outputStrategy = outputStrategy;
         final Board board = propertiesBoardInitializeStrategy.initBoard();
-        this.gameEngine = new GameEngine(board, inputStrategy, drawStrategy);
+        this.gameEngine = new GameEngine(board, inputStrategy, outputStrategy);
     }
 
-    public void start() {
-//        drawStrategy.drawStart();
-        gameEngine.start();
+    void run() {
+        outputStrategy.displayMessage("Starting the game");
+        gameEngine.run();
+        finish();
     }
 
-    public void finish() {
-//        drawStrategy.drawResult();
+    private void finish() {
+        outputStrategy.displayMessage("The result is it's over");
     }
 }
