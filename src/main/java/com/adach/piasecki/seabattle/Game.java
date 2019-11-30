@@ -19,9 +19,11 @@ public class Game {
     }
 
     public void start() {
+//        drawStrategy.drawStart();
         gameEngine.start();
     }
 
     public void finish() {
+//        drawStrategy.drawResult();
     }
 }
