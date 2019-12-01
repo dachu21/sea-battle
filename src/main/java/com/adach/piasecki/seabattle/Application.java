@@ -2,9 +2,9 @@ package com.adach.piasecki.seabattle;
 
 import com.adach.piasecki.seabattle.initializer.BoardInitializeStrategy;
 import com.adach.piasecki.seabattle.initializer.PropertiesBoardInitializeStrategy;
-import com.adach.piasecki.seabattle.input.ConsoleInputStrategy;
+import com.adach.piasecki.seabattle.input.console.ConsoleInputStrategy;
 import com.adach.piasecki.seabattle.input.InputStrategy;
-import com.adach.piasecki.seabattle.output.ConsoleOutputStrategy;
+import com.adach.piasecki.seabattle.output.console.ConsoleOutputStrategy;
 import com.adach.piasecki.seabattle.output.OutputStrategy;
 
 public class Application {

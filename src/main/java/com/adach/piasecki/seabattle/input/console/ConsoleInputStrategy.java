@@ -1,4 +1,8 @@
-package com.adach.piasecki.seabattle.input;
+package com.adach.piasecki.seabattle.input.console;
+
+import com.adach.piasecki.seabattle.input.Command;
+import com.adach.piasecki.seabattle.input.CommandProcessor;
+import com.adach.piasecki.seabattle.input.InputStrategy;
 
 import java.util.Scanner;
 

@@ -1,19 +1,26 @@
-package com.adach.piasecki.seabattle.output;
+package com.adach.piasecki.seabattle.output.console;
 
 import com.adach.piasecki.seabattle.model.Board;
 import com.adach.piasecki.seabattle.model.FieldState;
+import com.adach.piasecki.seabattle.output.OutputStrategy;
+
+import java.util.Map;
+
+import static com.adach.piasecki.seabattle.model.FieldState.*;
+import static com.adach.piasecki.seabattle.output.console.AsciiCodes.A_ASCII_CODE;
 
 public class ConsoleOutputStrategy implements OutputStrategy {
 
-    private static final int A_ASCII_CODE = 65;
     private static final String BLANK_SPACE = " ";
-    private int i = 0;
+    private static final Map<FieldState, String> FIELD_STATE_REPRESENTATION_MAP = Map.of(
+            UNKNOWN, BLANK_SPACE,
+            MISSED, "x",
+            SCORED, "o"
+    );
 
     @Override
     public void draw(final Board board) {
         clearScreen();
-        println("test " + i);
-        i++;
 
         final int boardWidth = board.getWidth();
         final int boardHeight = board.getHeight();
@@ -33,7 +40,7 @@ public class ConsoleOutputStrategy implements OutputStrategy {
                 print(BLANK_SPACE);
             }
             for (int column = 0; column < boardWidth; column++) {
-                print(getFieldRepresentation(board.getFieldStateAt(column, row)));
+                print(FIELD_STATE_REPRESENTATION_MAP.get(board.getFieldStateAt(column, row)));
                 if (column != boardWidth - 1) {
                     print(BLANK_SPACE);
                 }
@@ -47,18 +54,6 @@ public class ConsoleOutputStrategy implements OutputStrategy {
         println();
         println(message);
         println();
-    }
-
-    private String getFieldRepresentation(FieldState fieldState) {
-        switch (fieldState) {
-            case UNKNOWN:
-                return " ";
-            case MISSED:
-                return "o";
-            case SCORED:
-                return "x";
-        }
-        return null;
     }
 
     private void clearScreen() {
