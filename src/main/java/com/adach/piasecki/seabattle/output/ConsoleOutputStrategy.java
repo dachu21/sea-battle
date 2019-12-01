@@ -17,7 +17,7 @@ public class ConsoleOutputStrategy implements OutputStrategy {
         final int boardWidth = board.getWidth();
         final int boardHeight = board.getHeight();
 
-        print(BLANK_SPACE + BLANK_SPACE);
+        print(BLANK_SPACE + BLANK_SPACE + BLANK_SPACE);
         for (int column = 0; column < boardWidth; column++) {
             print(asciiToString(column + A_ASCII_CODE));
             if (column != boardWidth - 1) {
@@ -26,7 +26,11 @@ public class ConsoleOutputStrategy implements OutputStrategy {
         }
         println();
         for (int row = 0; row < boardHeight; row++) {
-            print((row + 1) + BLANK_SPACE);
+            final int rowNumber = row + 1;
+            print(Integer.toString(rowNumber));
+            for (int i = 0; i + lengthOf(rowNumber) < 3; i++) {
+                print(BLANK_SPACE);
+            }
             for (int column = 0; column < boardWidth; column++) {
                 print("x");
                 if (column != boardWidth - 1) {
@@ -63,6 +67,10 @@ public class ConsoleOutputStrategy implements OutputStrategy {
 
     private String asciiToString(final int code) {
         return Character.toString((char) code);
+    }
+
+    private int lengthOf(final int number) {
+        return Integer.toString(number).length();
     }
 
 }
