@@ -52,11 +52,11 @@ public class ConsoleOutputStrategy implements OutputStrategy {
     private String getFieldRepresentation(FieldState fieldState) {
         switch (fieldState) {
             case UNKNOWN:
-                return "u";
+                return " ";
             case MISSED:
-                return "m";
+                return "o";
             case SCORED:
-                return "s";
+                return "x";
         }
         return null;
     }

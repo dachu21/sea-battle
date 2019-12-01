@@ -8,8 +8,8 @@ import static com.adach.piasecki.seabattle.model.FieldState.*;
 class GameLogicProcessor {
 
     boolean makeMove(final Board board, final Command command) {
-        int column = 0;//temp
-        int row = 0;//temp
+        int column = command.getColumn();
+        int row = command.getRow();
         if (board.getFieldStateAt(column, row) != UNKNOWN) {
             return false;
         }

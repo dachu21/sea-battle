@@ -37,7 +37,7 @@ public class Board {
     }
 
     public FieldState getFieldStateAt(int column, int row) {
-        return fieldStates[row][column];
+        return fieldStates[column][row];
     }
 
     public void setFieldStateAt(final int column, final int row, final FieldState fieldState) {
