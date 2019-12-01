@@ -12,6 +12,7 @@ class GameEngine {
     private final Board board;
     private final InputStrategy inputStrategy;
     private final OutputStrategy outputStrategy;
+    private final GameLogicProcessor logicProcessor = new GameLogicProcessor();
 
     void run() {
         outputStrategy.draw(board);
@@ -25,6 +26,6 @@ class GameEngine {
     }
 
     private boolean updateBoard(final Command command) {
-        return false;
+        return logicProcessor.makeMove(board, command);
     }
 }

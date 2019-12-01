@@ -1,6 +1,7 @@
 package com.adach.piasecki.seabattle.output;
 
 import com.adach.piasecki.seabattle.model.Board;
+import com.adach.piasecki.seabattle.model.FieldState;
 
 public class ConsoleOutputStrategy implements OutputStrategy {
 
@@ -32,7 +33,7 @@ public class ConsoleOutputStrategy implements OutputStrategy {
                 print(BLANK_SPACE);
             }
             for (int column = 0; column < boardWidth; column++) {
-                print("x");
+                print(getFieldRepresentation(board.getFieldStateAt(column, row)));
                 if (column != boardWidth - 1) {
                     print(BLANK_SPACE);
                 }
@@ -46,6 +47,18 @@ public class ConsoleOutputStrategy implements OutputStrategy {
         println();
         println(message);
         println();
+    }
+
+    private String getFieldRepresentation(FieldState fieldState) {
+        switch (fieldState) {
+            case UNKNOWN:
+                return "u";
+            case MISSED:
+                return "m";
+            case SCORED:
+                return "s";
+        }
+        return null;
     }
 
     private void clearScreen() {
