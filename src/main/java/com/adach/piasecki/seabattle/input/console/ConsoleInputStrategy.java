@@ -25,12 +25,12 @@ public class ConsoleInputStrategy implements InputStrategy {
         return commandProcessor.processCommand(input);
     }
 
-    @Override
-    public void dispose() {
-        scanner.close();
-    }
-
     private boolean isEmpty(final String string) {
         return string == null || string.trim().isEmpty();
+    }
+
+    @Override
+    public void close() {
+        scanner.close();
     }
 }
