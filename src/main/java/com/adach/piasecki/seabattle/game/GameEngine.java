@@ -19,7 +19,6 @@ class GameEngine {
         GameStatus gameStatus;
 
         do {
-            outputStrategy.drawBoard(board);
             final Command command = inputStrategy.waitForInput();
             gameStatus = updateBoard(command);
             outputStrategy.drawBoard(board);

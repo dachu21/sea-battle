@@ -1,8 +1,12 @@
 package com.adach.piasecki.seabattle.model;
 
+import com.adach.piasecki.seabattle.model.Field.FieldState;
 import lombok.Getter;
 
-import static com.adach.piasecki.seabattle.model.FieldState.UNKNOWN;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Board {
 
@@ -12,35 +16,31 @@ public class Board {
     @Getter
     private final int height;
 
-    private boolean[][] fields;
+    private Map<Character, List<Field>> fields;
 
-    private FieldState[][] fieldStates;
-
-    public Board(final int width, final int height, final boolean[][] fields) {
-        this.width = width;
-        this.height = height;
+    public Board(final Map<Character, List<Field>> fields) {
+        this.width = fields.size();
+        this.height = fields.values().stream().findFirst().get().size(); // TODO fix get
         this.fields = fields;
-        this.fieldStates = new FieldState[width][height];
-        for (int i = 0; i < 20; i++) {
-            for (int j = 0; j < 20; j++) {
-                fieldStates[i][j] = UNKNOWN;
-            }
-        }
     }
 
-    public boolean getFieldAt(final int column, final int row) {
-        return fields[column][row];
+    public List<Character> getColumnLabels() {
+        return fields.keySet().stream().sorted().collect(Collectors.toUnmodifiableList());
     }
 
-    public void setFieldAt(final int column, final int row, boolean ship) {
-        fields[column][row] = ship;
+    public Field getFieldAt(final char column, final int row) {
+        return new Field(fields.get(column).get(row));
     }
 
-    public FieldState getFieldStateAt(int column, int row) {
-        return fieldStates[column][row];
+    public void setFieldOccupied(final char column, final int row, boolean occupied) {
+        fields.get(column).get(row).setOccupied(occupied);
     }
 
-    public void setFieldStateAt(final int column, final int row, final FieldState fieldState) {
-        fieldStates[column][row] = fieldState;
+    public void setFieldState(final char column, final int row, final FieldState fieldState) {
+        fields.get(column).get(row).setState(fieldState);
+    }
+
+    public boolean noFieldsOccupied() {
+        return fields.values().stream().flatMap(Collection::stream).noneMatch(Field::isOccupied);
     }
 }

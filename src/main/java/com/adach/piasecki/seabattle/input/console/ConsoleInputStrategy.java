@@ -8,25 +8,16 @@ import java.util.Scanner;
 
 public class ConsoleInputStrategy implements InputStrategy {
 
-    private final Scanner scanner;
-    private final CommandProcessor commandProcessor;
-
-    public ConsoleInputStrategy() {
-        scanner = new Scanner(System.in);
-        commandProcessor = new StringCommandProcessor();
-    }
+    private final Scanner scanner = new Scanner(System.in);
+    private final CommandProcessor commandProcessor = new StringCommandProcessor();
 
     @Override
     public Command waitForInput() {
-        String input = null;
-        while (isEmpty(input)) {
+        String input;
+        do {
             input = scanner.nextLine();
-        }
+        } while (input.isBlank());
         return commandProcessor.processCommand(input);
-    }
-
-    private boolean isEmpty(final String string) {
-        return string == null || string.trim().isEmpty();
     }
 
     @Override
