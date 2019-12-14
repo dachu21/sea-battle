@@ -19,7 +19,7 @@ public class ConsoleOutputStrategy implements OutputStrategy {
     );
 
     @Override
-    public void draw(final Board board) {
+    public void drawBoard(final Board board) {
         clearScreen();
 
         final int boardWidth = board.getWidth();

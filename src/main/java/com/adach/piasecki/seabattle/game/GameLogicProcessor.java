@@ -1,4 +1,4 @@
-package com.adach.piasecki.seabattle;
+package com.adach.piasecki.seabattle.game;
 
 import com.adach.piasecki.seabattle.input.Command;
 import com.adach.piasecki.seabattle.model.Board;
@@ -7,11 +7,11 @@ import static com.adach.piasecki.seabattle.model.FieldState.*;
 
 class GameLogicProcessor {
 
-    boolean makeMove(final Board board, final Command command) {
+    GameStatus makeMove(final Board board, final Command command) {
         int column = command.getColumn();
         int row = command.getRow();
         if (board.getFieldStateAt(column, row) != UNKNOWN) {
-            return false;
+            return new GameStatus(false);
         }
         if (board.getFieldAt(column, row)) {
             board.setFieldAt(column, row, false);
@@ -20,7 +20,7 @@ class GameLogicProcessor {
             board.setFieldStateAt(column, row, MISSED);
         }
 
-        return checkFinished(board);
+        return new GameStatus(checkFinished(board));
     }
 
     private boolean checkFinished(final Board board) {

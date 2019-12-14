@@ -1,4 +1,4 @@
-package com.adach.piasecki.seabattle;
+package com.adach.piasecki.seabattle.game;
 
 import com.adach.piasecki.seabattle.input.Command;
 import com.adach.piasecki.seabattle.input.InputStrategy;
@@ -15,17 +15,18 @@ class GameEngine {
     private final GameLogicProcessor logicProcessor = new GameLogicProcessor();
 
     void run() {
-        outputStrategy.draw(board);
+        outputStrategy.drawBoard(board);
+        GameStatus gameStatus;
 
-        boolean finished = false;
-        while (!finished) {
+        do {
+            outputStrategy.drawBoard(board);
             final Command command = inputStrategy.waitForInput();
-            finished = updateBoard(command);
-            outputStrategy.draw(board);
-        }
+            gameStatus = updateBoard(command);
+            outputStrategy.drawBoard(board);
+        } while (!gameStatus.isFinished());
     }
 
-    private boolean updateBoard(final Command command) {
+    private GameStatus updateBoard(final Command command) {
         return logicProcessor.makeMove(board, command);
     }
 }

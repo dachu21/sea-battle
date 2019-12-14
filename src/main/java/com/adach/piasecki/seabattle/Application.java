@@ -1,5 +1,6 @@
 package com.adach.piasecki.seabattle;
 
+import com.adach.piasecki.seabattle.game.Game;
 import com.adach.piasecki.seabattle.initializer.BoardInitializeStrategy;
 import com.adach.piasecki.seabattle.initializer.PropertiesBoardInitializeStrategy;
 import com.adach.piasecki.seabattle.input.InputStrategy;
@@ -17,7 +18,7 @@ public class Application {
         try (final InputStrategy inputStrategy = new ConsoleInputStrategy()) {
             new Game(inputStrategy, outputStrategy, boardInitializeStrategy).run();
         } catch (Exception e) {
-            log.error(e.getMessage(), e);
+            log.error("An error occurred while running application:", e);
         }
     }
 }
