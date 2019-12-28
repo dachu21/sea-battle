@@ -2,6 +2,8 @@ package com.adach.piasecki.seabattle.initializer;
 
 import com.adach.piasecki.seabattle.model.Board;
 import com.adach.piasecki.seabattle.model.Field;
+import com.adach.piasecki.seabattle.model.HorizontalShip;
+import com.adach.piasecki.seabattle.model.Ship;
 
 import java.util.HashMap;
 import java.util.List;
@@ -9,19 +11,23 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.adach.piasecki.seabattle.model.Field.FieldState.UNKNOWN;
-
 public class PropertiesBoardInitializeStrategy implements BoardInitializeStrategy {
 
-    public Board initBoard() {
+    public Board initializeBoard() {
         final Map<Character, List<Field>> fieldsMap = new HashMap<>();
-        Stream.iterate('a', i -> ++i).limit(20).forEach(columnChar -> {
+        Stream.iterate('A', i -> ++i).limit(10).forEach(columnChar -> {
             List<Field> columnFields = Stream
-                .generate(() -> new Field(true, UNKNOWN))
-                .limit(20)
+                .generate(Field::empty)
+                .limit(10)
                 .collect(Collectors.toList());
             fieldsMap.put(columnChar, columnFields);
         });
-        return new Board(fieldsMap);
+
+        Ship ship = new HorizontalShip(5, 'C', 'E');
+        for (var shipCoordinates : ship.getCoordinates()) {
+            fieldsMap.get(shipCoordinates.getColumn()).set(shipCoordinates.getRow(), Field.withShip(ship));
+        }
+
+        return new Board(10, 10, fieldsMap);
     }
 }

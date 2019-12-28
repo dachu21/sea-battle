@@ -7,15 +7,13 @@ import com.adach.piasecki.seabattle.output.OutputStrategy;
 
 public class Game {
 
-    private final InputStrategy inputStrategy;
     private final OutputStrategy outputStrategy;
     private final GameEngine gameEngine;
 
     public Game(final InputStrategy inputStrategy, final OutputStrategy outputStrategy,
                 final BoardInitializeStrategy boardInitializeStrategy) {
-        this.inputStrategy = inputStrategy;
+        final Board board = boardInitializeStrategy.initializeBoard();
         this.outputStrategy = outputStrategy;
-        final Board board = boardInitializeStrategy.initBoard();
         this.gameEngine = new GameEngine(board, inputStrategy, outputStrategy);
     }
 

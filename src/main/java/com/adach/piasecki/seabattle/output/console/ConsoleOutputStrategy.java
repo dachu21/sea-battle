@@ -1,54 +1,56 @@
 package com.adach.piasecki.seabattle.output.console;
 
 import com.adach.piasecki.seabattle.model.Board;
-import com.adach.piasecki.seabattle.model.Field.FieldState;
+import com.adach.piasecki.seabattle.model.Coordinates;
+import com.adach.piasecki.seabattle.model.FieldState;
 import com.adach.piasecki.seabattle.output.OutputStrategy;
 
-import java.util.List;
 import java.util.Map;
-
-import static com.adach.piasecki.seabattle.model.Field.FieldState.*;
 
 public class ConsoleOutputStrategy implements OutputStrategy {
 
+    private static final char START_COLUMN = 'A';
     private static final String BLANK_SPACE = " ";
-    private static final Map<FieldState, String> FIELD_STATE_REPRESENTATIONS = Map.of(
-        UNKNOWN, BLANK_SPACE,
-        MISSED, "x",
-        SCORED, "o"
+    private static final Map<FieldState, String> FIELD_REPRESENTATIONS = Map.of(
+        FieldState.UNKNOWN_EMPTY, BLANK_SPACE,
+        FieldState.UNKNOWN_SHIP, BLANK_SPACE,
+        FieldState.MISSED, "o",
+        FieldState.HIT, "x",
+        FieldState.SUNK, "*"
     );
 
     @Override
     public void drawBoard(final Board board) {
-        List<Character> columnLabels = board.getColumnLabels();
-
         clearScreen();
-        printColumnLabels(columnLabels);
-        printRows(board, columnLabels);
+        printColumnLabels(board);
+        printRows(board);
     }
 
-    private void printColumnLabels(List<Character> columnLabels) {
-        print(String.format("%-3s", BLANK_SPACE));
-        columnLabels.forEach(columnLabel -> {
-            print(Character.toUpperCase(columnLabel) + BLANK_SPACE);
-        });
+    private void printColumnLabels(final Board board) {
+        print(String.format("%-4s", BLANK_SPACE));
+
+        for (int columnIndex = 0; columnIndex < board.getWidth(); columnIndex++) {
+            char columnLabel = (char) (START_COLUMN + columnIndex);
+            print(columnLabel + BLANK_SPACE);
+        }
         println();
     }
 
-    private void printRows(Board board, List<Character> columnLabels) {
+    private void printRows(final Board board) {
         for (int row = 0; row < board.getHeight(); row++) {
-            printRowLabel(row);
-            for (char columnLabel : columnLabels) {
-                FieldState fieldState = board.getFieldAt(columnLabel, row).getState();
-                print(FIELD_STATE_REPRESENTATIONS.get(fieldState) + BLANK_SPACE);
-            }
-            println();
+            printRow(board, row);
         }
     }
 
-    private void printRowLabel(int row) {
-        final int rowNumber = row + 1;
-        print(String.format("%-3s", rowNumber));
+    private void printRow(final Board board, final int row) {
+        print(String.format("%-4s", row));
+
+        for (int columnIndex = 0; columnIndex < board.getWidth(); columnIndex++) {
+            char columnLabel = (char) (START_COLUMN + columnIndex);
+            FieldState fieldState = board.getFieldStateAt(Coordinates.of(columnLabel, row));
+            print(FIELD_REPRESENTATIONS.get(fieldState) + BLANK_SPACE);
+        }
+        println();
     }
 
     @Override

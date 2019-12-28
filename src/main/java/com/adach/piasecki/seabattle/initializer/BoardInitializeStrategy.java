@@ -4,5 +4,5 @@ import com.adach.piasecki.seabattle.model.Board;
 
 public interface BoardInitializeStrategy {
 
-    Board initBoard();
+    Board initializeBoard();
 }

@@ -7,5 +7,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 class GameStatus {
 
-    private final boolean finished;
+    private final long hitsLeft;
+    private final long totalMoves;
 }

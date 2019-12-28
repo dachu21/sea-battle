@@ -1,46 +1,53 @@
 package com.adach.piasecki.seabattle.model;
 
-import com.adach.piasecki.seabattle.model.Field.FieldState;
 import lombok.Getter;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 public class Board {
 
     @Getter
     private final int width;
-
     @Getter
     private final int height;
+    @Getter
+    private final long shipFieldsCount;
 
-    private Map<Character, List<Field>> fields;
+    private final Map<Character, List<Field>> fields;
 
-    public Board(final Map<Character, List<Field>> fields) {
-        this.width = fields.size();
-        this.height = fields.values().stream().findFirst().get().size(); // TODO fix get
+    public Board(final int width, final int height, final Map<Character, List<Field>> fields) {
+        this.width = width;
+        this.height = height;
         this.fields = fields;
+        this.shipFieldsCount = countShipFields();
     }
 
-    public List<Character> getColumnLabels() {
-        return fields.keySet().stream().sorted().collect(Collectors.toUnmodifiableList());
+    public FieldState getFieldStateAt(final Coordinates coordinates) {
+        return getFieldAt(coordinates).getState();
     }
 
-    public Field getFieldAt(final char column, final int row) {
-        return new Field(fields.get(column).get(row));
+    public void shootFieldAt(final Coordinates coordinates) {
+        List<Coordinates> sunkShipCoordinates = getFieldAt(coordinates).shoot();
+        setFieldsToSunkState(sunkShipCoordinates);
     }
 
-    public void setFieldOccupied(final char column, final int row, boolean occupied) {
-        fields.get(column).get(row).setOccupied(occupied);
+    private long countShipFields() {
+        return fields.values().stream()
+            .flatMap(Collection::stream)
+            .map(Field::getShip)
+            .filter(Optional::isPresent)
+            .count();
     }
 
-    public void setFieldState(final char column, final int row, final FieldState fieldState) {
-        fields.get(column).get(row).setState(fieldState);
+    private Field getFieldAt(final Coordinates coordinates) {
+        return fields.get(coordinates.getColumn()).get(coordinates.getRow());
     }
 
-    public boolean noFieldsOccupied() {
-        return fields.values().stream().flatMap(Collection::stream).noneMatch(Field::isOccupied);
+    private void setFieldsToSunkState(final List<Coordinates> sunkShipCoordinates) {
+        sunkShipCoordinates.forEach(coordinates ->
+            getFieldAt(coordinates).setStateToSunk());
     }
 }

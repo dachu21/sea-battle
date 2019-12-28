@@ -15,17 +15,23 @@ class GameEngine {
     private final GameLogicProcessor logicProcessor = new GameLogicProcessor();
 
     void run() {
+        GameStatus gameStatus = initializeGameStatus();
         outputStrategy.drawBoard(board);
-        GameStatus gameStatus;
 
-        do {
+        while (gameStatus.getHitsLeft() > 0) {
             final Command command = inputStrategy.waitForInput();
-            gameStatus = updateBoard(command);
+            gameStatus = updateGameStatus(gameStatus, command);
             outputStrategy.drawBoard(board);
-        } while (!gameStatus.isFinished());
+        }
+
+        outputStrategy.displayMessage("You won! Total moves: " + gameStatus.getTotalMoves());
     }
 
-    private GameStatus updateBoard(final Command command) {
-        return logicProcessor.makeMove(board, command);
+    private GameStatus initializeGameStatus() {
+        return new GameStatus(board.getShipFieldsCount(), 0);
+    }
+
+    private GameStatus updateGameStatus(final GameStatus currentGameStatus, final Command command) {
+        return logicProcessor.processCommand(board, currentGameStatus, command);
     }
 }
