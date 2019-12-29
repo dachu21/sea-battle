@@ -24,6 +24,8 @@ class GameEngine {
             final Command command = inputStrategy.waitForInput();
             if (commandValidator.validate(command)) {
                 gameStatus = updateGameStatus(gameStatus, command);
+            } else {
+                outputStrategy.displayMessage("Wrong command! Did you miss the board?");
             }
             outputStrategy.drawBoard(board);
         }
