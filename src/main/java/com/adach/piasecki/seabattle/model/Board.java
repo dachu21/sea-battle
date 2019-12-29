@@ -2,10 +2,8 @@ package com.adach.piasecki.seabattle.model;
 
 import lombok.Getter;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public class Board {
 
@@ -18,28 +16,21 @@ public class Board {
 
     private final Map<Character, List<Field>> fields;
 
-    public Board(final int width, final int height, final Map<Character, List<Field>> fields) {
+    public Board(final int width, final int height, final Map<Character, List<Field>> fields, int shipFieldsCount) {
         this.width = width;
         this.height = height;
         this.fields = fields;
-        this.shipFieldsCount = countShipFields();
+        this.shipFieldsCount = shipFieldsCount;
     }
 
     public FieldState getFieldStateAt(final Coordinates coordinates) {
         return getFieldAt(coordinates).getState();
     }
 
-    public void shootFieldAt(final Coordinates coordinates) {
-        List<Coordinates> sunkShipCoordinates = getFieldAt(coordinates).shoot();
-        setFieldsToSunkState(sunkShipCoordinates);
-    }
-
-    private long countShipFields() {
-        return fields.values().stream()
-            .flatMap(Collection::stream)
-            .map(Field::getShip)
-            .filter(Optional::isPresent)
-            .count();
+    public boolean shootFieldAt(final Coordinates coordinates) {
+        FieldShotStatus fieldShotStatus = getFieldAt(coordinates).shoot();
+        setFieldsToSunkState(fieldShotStatus.getSunkCoordinates());
+        return fieldShotStatus.isScored();
     }
 
     private Field getFieldAt(final Coordinates coordinates) {
@@ -48,6 +39,6 @@ public class Board {
 
     private void setFieldsToSunkState(final List<Coordinates> sunkShipCoordinates) {
         sunkShipCoordinates.forEach(coordinates ->
-            getFieldAt(coordinates).setStateToSunk());
+                getFieldAt(coordinates).setStateToSunk());
     }
 }

@@ -1,49 +1,19 @@
 package com.adach.piasecki.seabattle.model;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import static com.adach.piasecki.seabattle.model.FieldState.SUNK;
+import static com.adach.piasecki.seabattle.model.FieldState.UNKNOWN;
 
-import static com.adach.piasecki.seabattle.model.FieldState.*;
+public abstract class Field {
 
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class Field {
+    @Getter
+    FieldState state = UNKNOWN;
 
-    private final Ship ship;
-    private FieldState state;
-
-    public static Field empty() {
-        return new Field(null, UNKNOWN_EMPTY);
+    Field() {
     }
 
-    public static Field withShip(final Ship ship) {
-        return new Field(ship, UNKNOWN_SHIP);
-    }
-
-    List<Coordinates> shoot() {
-        if (state == UNKNOWN_SHIP) {
-            ship.shoot();
-            state = HIT;
-            return ship.isSunk() ? ship.getCoordinates() : Collections.emptyList();
-        }
-
-        if (state == UNKNOWN_EMPTY) {
-            state = MISSED;
-        }
-
-        return Collections.emptyList();
-    }
-
-    Optional<Ship> getShip() {
-        return Optional.ofNullable(ship);
-    }
-
-    FieldState getState() {
-        return state;
-    }
+    protected abstract FieldShotStatus shoot();
 
     void setStateToSunk() {
         state = SUNK;
