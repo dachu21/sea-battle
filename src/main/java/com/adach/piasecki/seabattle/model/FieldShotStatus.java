@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class FieldShotStatus {
+class FieldShotStatus {
 
     private final boolean scored;
 

@@ -29,7 +29,9 @@ public class Board {
 
     public boolean shootFieldAt(final Coordinates coordinates) {
         FieldShotStatus fieldShotStatus = getFieldAt(coordinates).shoot();
-        setFieldsToSunkState(fieldShotStatus.getSunkCoordinates());
+        if (fieldShotStatus.isScored()) {
+            setFieldsToSunkState(fieldShotStatus.getSunkCoordinates());
+        }
         return fieldShotStatus.isScored();
     }
 

@@ -1,6 +1,7 @@
 package com.adach.piasecki.seabattle.game;
 
 import com.adach.piasecki.seabattle.input.Command;
+import com.adach.piasecki.seabattle.input.CommandValidator;
 import com.adach.piasecki.seabattle.input.InputStrategy;
 import com.adach.piasecki.seabattle.model.Board;
 import com.adach.piasecki.seabattle.output.OutputStrategy;
@@ -12,6 +13,7 @@ class GameEngine {
     private final Board board;
     private final InputStrategy inputStrategy;
     private final OutputStrategy outputStrategy;
+    private final CommandValidator commandValidator;
     private final GameLogicProcessor logicProcessor = new GameLogicProcessor();
 
     void run() {
@@ -20,7 +22,9 @@ class GameEngine {
 
         while (gameStatus.getHitsLeft() > 0) {
             final Command command = inputStrategy.waitForInput();
-            gameStatus = updateGameStatus(gameStatus, command);
+            if (commandValidator.validate(command)) {
+                gameStatus = updateGameStatus(gameStatus, command);
+            }
             outputStrategy.drawBoard(board);
         }
 
