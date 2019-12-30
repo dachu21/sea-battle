@@ -3,8 +3,10 @@ package com.adach.piasecki.seabattle.output.console;
 import com.adach.piasecki.seabattle.model.Board;
 import com.adach.piasecki.seabattle.model.Coordinates;
 import com.adach.piasecki.seabattle.model.FieldState;
+import com.adach.piasecki.seabattle.model.Ship;
 import com.adach.piasecki.seabattle.output.OutputStrategy;
 
+import java.util.List;
 import java.util.Map;
 
 public class ConsoleOutputStrategy implements OutputStrategy {
@@ -23,6 +25,8 @@ public class ConsoleOutputStrategy implements OutputStrategy {
         clearScreen();
         printColumnLabels(board);
         printRows(board);
+        println();
+        printShipsInfo(board.getShips());
     }
 
     private void printColumnLabels(final Board board) {
@@ -50,6 +54,18 @@ public class ConsoleOutputStrategy implements OutputStrategy {
             print(FIELD_REPRESENTATIONS.get(fieldState) + BLANK_SPACE);
         }
         println();
+    }
+
+    private void printShipsInfo(final List<Ship> shipList) {
+        println("Ships left:");
+        shipList.forEach(ship -> {
+            if (!ship.isSunk()) {
+                for (int i = 0; i < ship.getSize(); i++) {
+                    print("?");
+                }
+                println();
+            }
+        });
     }
 
     @Override

@@ -39,7 +39,7 @@ public class RandomBoardInitializeStrategy extends AbstractFileBoardInitializeSt
 
         final Map<Character, List<Field>> fieldMap = createFieldMap(width, height, shipList, shipFieldsCount);
 
-        return new Board(width, height, fieldMap, shipFieldsCount.get());
+        return new Board(width, height, fieldMap, shipList, shipFieldsCount.get());
     }
 
     private List<Ship> generateShips(final int width, final int height,
