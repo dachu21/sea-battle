@@ -1,5 +1,7 @@
 package com.adach.piasecki.seabattle.game;
 
+import com.adach.piasecki.seabattle.exception.InvalidCommandException;
+import com.adach.piasecki.seabattle.exception.InvalidInputException;
 import com.adach.piasecki.seabattle.input.Command;
 import com.adach.piasecki.seabattle.input.CommandValidator;
 import com.adach.piasecki.seabattle.input.InputStrategy;
@@ -21,11 +23,12 @@ class GameEngine {
         outputStrategy.drawBoard(board);
 
         while (gameStatus.getHitsLeft() > 0) {
-            final Command command = inputStrategy.waitForInput();
-            if (commandValidator.validate(command)) {
+            try {
+                final Command command = inputStrategy.waitForInput();
+                commandValidator.validate(command);
                 gameStatus = updateGameStatus(gameStatus, command);
-            } else {
-                outputStrategy.displayMessage("Wrong command! Did you miss the board?");
+            } catch (InvalidInputException | InvalidCommandException ex) {
+                displayInvalidCommandError();
             }
             outputStrategy.drawBoard(board);
         }
@@ -39,5 +42,9 @@ class GameEngine {
 
     private GameStatus updateGameStatus(final GameStatus currentGameStatus, final Command command) {
         return logicProcessor.processCommand(board, currentGameStatus, command);
+    }
+
+    private void displayInvalidCommandError() {
+        outputStrategy.displayMessage("Invalid command! Did you miss the board?");
     }
 }

@@ -1,5 +1,6 @@
 package com.adach.piasecki.seabattle.input.console;
 
+import com.adach.piasecki.seabattle.exception.InvalidInputException;
 import com.adach.piasecki.seabattle.input.Command;
 import com.adach.piasecki.seabattle.input.CommandProcessor;
 import com.adach.piasecki.seabattle.input.InputStrategy;
@@ -12,7 +13,7 @@ public class ConsoleInputStrategy implements InputStrategy {
     private final CommandProcessor commandProcessor = new StringCommandProcessor();
 
     @Override
-    public Command waitForInput() {
+    public Command waitForInput() throws InvalidInputException {
         String input;
         do {
             input = scanner.nextLine();
