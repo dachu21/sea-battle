@@ -11,7 +11,6 @@ public class EmptyField extends Field {
         if (state == UNKNOWN) {
             state = MISSED;
         }
-
         return new FieldShotStatus(false, Collections.emptyList());
     }
 }

@@ -25,14 +25,14 @@ public class Application {
         }
     }
 
-    private static String parseBoardInitializeStrategyArg(final String[] args) throws InvalidCommandLineArgumentException {
+    private static String parseBoardInitializeStrategyArg(final String[] args) {
         if (args.length != 1) {
             throw new InvalidCommandLineArgumentException("Command line argument for board initialize strategy is missing!");
         }
         return args[0];
     }
 
-    private static BoardInitializeStrategy chooseBoardInitializeStrategy(String arg) throws InvalidCommandLineArgumentException {
+    private static BoardInitializeStrategy chooseBoardInitializeStrategy(final String arg) {
         switch (arg) {
             case "-m":
                 return new ManualBoardInitializeStrategy();

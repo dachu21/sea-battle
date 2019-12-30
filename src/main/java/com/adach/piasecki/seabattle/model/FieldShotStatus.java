@@ -1,15 +1,14 @@
 package com.adach.piasecki.seabattle.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
 @Getter
-@AllArgsConstructor
+@RequiredArgsConstructor
 class FieldShotStatus {
 
     private final boolean scored;
-
     private final List<Coordinates> sunkCoordinates;
 }

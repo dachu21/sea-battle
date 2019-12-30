@@ -7,20 +7,26 @@ import com.adach.piasecki.seabattle.input.CommandValidator;
 import com.adach.piasecki.seabattle.input.InputStrategy;
 import com.adach.piasecki.seabattle.model.Board;
 import com.adach.piasecki.seabattle.output.OutputStrategy;
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 class GameEngine {
 
     private final Board board;
     private final InputStrategy inputStrategy;
     private final OutputStrategy outputStrategy;
     private final CommandValidator commandValidator;
-    private final GameLogicProcessor logicProcessor = new GameLogicProcessor();
+    private final GameLogicProcessor logicProcessor;
+
+    GameEngine(Board board, InputStrategy inputStrategy, OutputStrategy outputStrategy) {
+        this.board = board;
+        this.inputStrategy = inputStrategy;
+        this.outputStrategy = outputStrategy;
+        this.commandValidator = new CommandValidator(board.getWidth(), board.getHeight());
+        this.logicProcessor = new GameLogicProcessor();
+    }
 
     void run() {
         GameStatus gameStatus = initializeGameStatus();
-        outputStrategy.drawBoard(board);
+        displayBoard(board);
 
         while (gameStatus.getHitsLeft() > 0) {
             try {
@@ -30,10 +36,10 @@ class GameEngine {
             } catch (InvalidInputException | InvalidCommandException ex) {
                 displayInvalidCommandError();
             }
-            outputStrategy.drawBoard(board);
+            displayBoard(board);
         }
 
-        outputStrategy.displayMessage("You won! Total moves: " + gameStatus.getTotalMoves());
+        displayWinMessage(gameStatus);
     }
 
     private GameStatus initializeGameStatus() {
@@ -44,7 +50,15 @@ class GameEngine {
         return logicProcessor.processCommand(board, currentGameStatus, command);
     }
 
+    private void displayBoard(final Board board) {
+        outputStrategy.drawBoard(board);
+    }
+
     private void displayInvalidCommandError() {
         outputStrategy.displayMessage("Invalid command! Did you miss the board?");
+    }
+
+    private void displayWinMessage(final GameStatus gameStatus) {
+        outputStrategy.displayMessage("You won! Total moves: " + gameStatus.getTotalMoves());
     }
 }

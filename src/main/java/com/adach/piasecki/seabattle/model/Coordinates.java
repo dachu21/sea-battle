@@ -11,7 +11,7 @@ public class Coordinates {
     private final char column;
     private final int row;
 
-    public static Coordinates of(char column, int row) {
+    public static Coordinates of(final char column, final int row) {
         return new Coordinates(column, row);
     }
 }

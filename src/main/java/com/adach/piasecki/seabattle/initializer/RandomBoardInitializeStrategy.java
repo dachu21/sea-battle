@@ -28,30 +28,29 @@ public class RandomBoardInitializeStrategy extends AbstractFileBoardInitializeSt
     private static final int MAX_SHIP_LENGTH = 6;
 
     public Board initializeBoard() {
-        int width;
-        int height;
-        int verticalShipsNumber;
-        int horizontalShipsNumber;
-        List<Ship> shipList;
-        AtomicInteger shipFieldsCount = new AtomicInteger();
+        final int width;
+        final int height;
+        final int verticalShipsNumber;
+        final int horizontalShipsNumber;
 
         try (Scanner scanner = new Scanner(new File(FILENAME))) {
             width = readWidth(scanner);
             height = readHeight(scanner);
             verticalShipsNumber = readVerticalShipsNumber(scanner);
             horizontalShipsNumber = readHorizontalShipsNumber(scanner);
-            shipList = generateShips(width, height, verticalShipsNumber, horizontalShipsNumber);
         } catch (FileNotFoundException e) {
             throw new BoardFileNotFoundException(e);
         }
 
+        final AtomicInteger shipFieldsCount = new AtomicInteger();
+        final List<Ship> shipList = generateShips(width, height, verticalShipsNumber, horizontalShipsNumber);
         final Map<Character, List<Field>> fieldMap = createFieldMap(width, height, shipList, shipFieldsCount);
 
-        return new Board(width, height, fieldMap, shipList, shipFieldsCount.get());
+        return new Board(width, height, shipFieldsCount.get(), shipList, fieldMap);
     }
 
-    private List<Ship> generateShips(final int width, final int height,
-                                     final int verticalShipsNumber, final int horizontalShipsNumber) {
+    private List<Ship> generateShips(final int width, final int height, final int verticalShipsNumber,
+                                     final int horizontalShipsNumber) {
         final List<Ship> shipList = new ArrayList<>();
 
         boolean[][] occupiedFields = new boolean[width][height];
@@ -139,15 +138,15 @@ public class RandomBoardInitializeStrategy extends AbstractFileBoardInitializeSt
         return true;
     }
 
+    private int randomIntFromRange(final int min, final int max) {
+        return new Random().nextInt(max - min) + min;
+    }
+
     private int readHorizontalShipsNumber(final Scanner scanner) {
         return readParameter(scanner, HORIZONTAL_SHIPS_NUMBER_PARAMETER, HORIZONTAL_SHIPS_NUMBER_NOT_PRESENT_ERROR_MESSAGE);
     }
 
     private int readVerticalShipsNumber(final Scanner scanner) {
         return readParameter(scanner, VERTICAL_SHIPS_NUMBER_PARAMETER, VERTICAL_SHIPS_NUMBER_NOT_PRESENT_ERROR_MESSAGE);
-    }
-
-    private int randomIntFromRange(final int min, final int max) {
-        return new Random().nextInt(max - min) + min;
     }
 }

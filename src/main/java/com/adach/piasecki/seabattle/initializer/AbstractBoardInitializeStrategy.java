@@ -14,8 +14,7 @@ import java.util.stream.Stream;
 
 abstract class AbstractBoardInitializeStrategy implements BoardInitializeStrategy {
 
-    Map<Character, List<Field>> createFieldMap(final int width, final int height,
-                                               final List<Ship> shipList,
+    Map<Character, List<Field>> createFieldMap(final int width, final int height, final List<Ship> shipList,
                                                final AtomicInteger shipFieldsCount) {
         final Map<Character, List<Field>> fieldMap = new HashMap<>();
         Stream.iterate('A', i -> ++i).limit(width).forEach(columnChar -> {

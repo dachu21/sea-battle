@@ -3,16 +3,15 @@ package com.adach.piasecki.seabattle.output.console;
 import com.adach.piasecki.seabattle.model.Board;
 import com.adach.piasecki.seabattle.model.Coordinates;
 import com.adach.piasecki.seabattle.model.FieldState;
-import com.adach.piasecki.seabattle.model.Ship;
 import com.adach.piasecki.seabattle.output.OutputStrategy;
 
-import java.util.List;
 import java.util.Map;
 
 public class ConsoleOutputStrategy implements OutputStrategy {
 
     private static final char START_COLUMN = 'A';
     private static final String BLANK_SPACE = " ";
+    private static final String SHIP_ELEMENT = "?";
     private static final Map<FieldState, String> FIELD_REPRESENTATIONS = Map.of(
         FieldState.UNKNOWN, BLANK_SPACE,
         FieldState.MISSED, "o",
@@ -26,7 +25,7 @@ public class ConsoleOutputStrategy implements OutputStrategy {
         printColumnLabels(board);
         printRows(board);
         println();
-        printShipsInfo(board.getShips());
+        printShipsInfo(board);
     }
 
     private void printColumnLabels(final Board board) {
@@ -56,12 +55,12 @@ public class ConsoleOutputStrategy implements OutputStrategy {
         println();
     }
 
-    private void printShipsInfo(final List<Ship> shipList) {
+    private void printShipsInfo(final Board board) {
         println("Ships left:");
-        shipList.forEach(ship -> {
+        board.getShips().forEach(ship -> {
             if (!ship.isSunk()) {
                 for (int i = 0; i < ship.getSize(); i++) {
-                    print("?");
+                    print(SHIP_ELEMENT);
                 }
                 println();
             }
