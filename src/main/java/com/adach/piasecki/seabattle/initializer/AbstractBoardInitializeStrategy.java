@@ -20,9 +20,9 @@ abstract class AbstractBoardInitializeStrategy implements BoardInitializeStrateg
         final Map<Character, List<Field>> fieldMap = new HashMap<>();
         Stream.iterate('A', i -> ++i).limit(width).forEach(columnChar -> {
             List<Field> columnFields = Stream
-                    .generate(EmptyField::new)
-                    .limit(height)
-                    .collect(Collectors.toList());
+                .generate(EmptyField::new)
+                .limit(height)
+                .collect(Collectors.toList());
             fieldMap.put(columnChar, columnFields);
         });
 

@@ -2,7 +2,11 @@ package com.adach.piasecki.seabattle.initializer;
 
 import com.adach.piasecki.seabattle.exception.BoardFileNotFoundException;
 import com.adach.piasecki.seabattle.exception.UnsupportedBoardFileFormatException;
-import com.adach.piasecki.seabattle.model.*;
+import com.adach.piasecki.seabattle.model.Board;
+import com.adach.piasecki.seabattle.model.Field;
+import com.adach.piasecki.seabattle.model.HorizontalShip;
+import com.adach.piasecki.seabattle.model.Ship;
+import com.adach.piasecki.seabattle.model.VerticalShip;
 
 import java.io.File;
 import java.io.FileNotFoundException;

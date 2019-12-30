@@ -14,10 +14,10 @@ public class ConsoleOutputStrategy implements OutputStrategy {
     private static final char START_COLUMN = 'A';
     private static final String BLANK_SPACE = " ";
     private static final Map<FieldState, String> FIELD_REPRESENTATIONS = Map.of(
-            FieldState.UNKNOWN, BLANK_SPACE,
-            FieldState.MISSED, "o",
-            FieldState.HIT, "x",
-            FieldState.SUNK, "*"
+        FieldState.UNKNOWN, BLANK_SPACE,
+        FieldState.MISSED, "o",
+        FieldState.HIT, "x",
+        FieldState.SUNK, "*"
     );
 
     @Override

@@ -16,7 +16,7 @@ public class Game {
         final Board board = boardInitializeStrategy.initializeBoard();
         this.outputStrategy = outputStrategy;
         this.gameEngine = new GameEngine(board, inputStrategy, outputStrategy,
-                new CommandValidator(board.getWidth(), board.getHeight()));
+            new CommandValidator(board.getWidth(), board.getHeight()));
     }
 
     public void run() {

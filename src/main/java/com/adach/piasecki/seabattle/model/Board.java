@@ -45,6 +45,6 @@ public class Board {
 
     private void setFieldsToSunkState(final List<Coordinates> sunkShipCoordinates) {
         sunkShipCoordinates.forEach(coordinates ->
-                getFieldAt(coordinates).setStateToSunk());
+            getFieldAt(coordinates).setStateToSunk());
     }
 }

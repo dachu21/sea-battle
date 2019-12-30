@@ -1,11 +1,19 @@
 package com.adach.piasecki.seabattle.initializer;
 
 import com.adach.piasecki.seabattle.exception.BoardFileNotFoundException;
-import com.adach.piasecki.seabattle.model.*;
+import com.adach.piasecki.seabattle.model.Board;
+import com.adach.piasecki.seabattle.model.Field;
+import com.adach.piasecki.seabattle.model.HorizontalShip;
+import com.adach.piasecki.seabattle.model.Ship;
+import com.adach.piasecki.seabattle.model.VerticalShip;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class RandomBoardInitializeStrategy extends AbstractFileBoardInitializeStrategy {
@@ -57,7 +65,7 @@ public class RandomBoardInitializeStrategy extends AbstractFileBoardInitializeSt
             int verticalShipsGenerated = 1;
             while (verticalShipsGenerated < verticalShipsNumber) {
                 for (int column = 0; column < width; column++) {
-                    final Ship newShip = generateRandomVerticalShipInColumn(width, height, column);
+                    final Ship newShip = generateRandomVerticalShipInColumn(height, column);
                     if (checkIfShipFits(occupiedFields, newShip)) {
                         shipList.add(newShip);
                         markOccupiedFields(occupiedFields, newShip);
@@ -71,7 +79,7 @@ public class RandomBoardInitializeStrategy extends AbstractFileBoardInitializeSt
         int horizontalShipsGenerated = 0;
         while (horizontalShipsGenerated < horizontalShipsNumber) {
             for (int row = 0; row < height; row++) {
-                final Ship newShip = generateRandomHorizontalShipInRow(width, height, row);
+                final Ship newShip = generateRandomHorizontalShipInRow(width, row);
                 if (checkIfShipFits(occupiedFields, newShip)) {
                     shipList.add(newShip);
                     markOccupiedFields(occupiedFields, newShip);
@@ -95,7 +103,7 @@ public class RandomBoardInitializeStrategy extends AbstractFileBoardInitializeSt
         return shipList;
     }
 
-    private Ship generateRandomVerticalShipInColumn(final int width, final int height, final int columnNumber) {
+    private Ship generateRandomVerticalShipInColumn(final int height, final int columnNumber) {
         int randomRow = randomIntFromRange(0, height - 1);
         char column = columnNumberToChar(columnNumber);
         int randomLength = randomIntFromRange(1, Math.min(MAX_SHIP_LENGTH, height - randomRow));
@@ -104,10 +112,10 @@ public class RandomBoardInitializeStrategy extends AbstractFileBoardInitializeSt
 
     private Ship generateRandomVerticalShip(final int width, final int height) {
         int randomColumnNumber = randomIntFromRange(0, width - 1);
-        return generateRandomVerticalShipInColumn(width, height, randomColumnNumber);
+        return generateRandomVerticalShipInColumn(height, randomColumnNumber);
     }
 
-    private Ship generateRandomHorizontalShipInRow(final int width, final int height, final int row) {
+    private Ship generateRandomHorizontalShipInRow(final int width, final int row) {
         int randomColumnNumber = randomIntFromRange(0, width - 1);
         int randomLength = randomIntFromRange(1, Math.min(MAX_SHIP_LENGTH, width - randomColumnNumber));
         return new HorizontalShip(row, columnNumberToChar(randomColumnNumber), columnNumberToChar(randomColumnNumber + randomLength - 1));
@@ -118,9 +126,8 @@ public class RandomBoardInitializeStrategy extends AbstractFileBoardInitializeSt
     }
 
     private void markOccupiedFields(final boolean[][] occupiedFields, final Ship ship) {
-        ship.getCoordinates().forEach(coordinates -> {
-            occupiedFields[coordinates.getColumn() - 'A'][coordinates.getRow()] = true;
-        });
+        ship.getCoordinates().forEach(coordinates ->
+            occupiedFields[coordinates.getColumn() - 'A'][coordinates.getRow()] = true);
     }
 
     private boolean checkIfShipFits(final boolean[][] occupiedFields, final Ship ship) {
