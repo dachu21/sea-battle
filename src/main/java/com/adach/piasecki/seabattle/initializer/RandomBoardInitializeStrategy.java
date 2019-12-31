@@ -88,17 +88,6 @@ public class RandomBoardInitializeStrategy extends AbstractFileBoardInitializeSt
             }
         }
 
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                if (occupiedFields[i][j]) {
-                    System.out.print(' ');
-                } else {
-                    System.out.print('o');
-                }
-            }
-            System.out.println();
-        }
-
         return shipList;
     }
 
