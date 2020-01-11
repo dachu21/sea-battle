@@ -7,7 +7,7 @@ import static com.adach.piasecki.seabattle.model.FieldState.UNKNOWN;
 
 public class EmptyField extends Field {
 
-    protected FieldShotStatus shoot() {
+    FieldShotStatus shoot() {
         if (state == UNKNOWN) {
             state = MISSED;
         }

@@ -19,6 +19,7 @@
 
         <lombok.version>1.18.10</lombok.version>
         <log4j.version>2.12.1</log4j.version>
+        <junit.version>5.5.2</junit.version>
 
         <maven-shade-plugin.version>3.2.1</maven-shade-plugin.version>
     </properties>
@@ -37,6 +38,14 @@
             <artifactId>log4j-slf4j-impl</artifactId>
             <version>${log4j.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>

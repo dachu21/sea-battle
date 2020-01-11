@@ -12,7 +12,7 @@ public class FieldWithShip extends Field {
 
     private final Ship ship;
 
-    protected FieldShotStatus shoot() {
+    FieldShotStatus shoot() {
         if (state == UNKNOWN) {
             ship.shoot();
             state = HIT;
