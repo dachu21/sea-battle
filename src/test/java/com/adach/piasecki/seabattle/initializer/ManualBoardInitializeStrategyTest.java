@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ManualBoardInitializeStrategyTest {
 
-    private BoardInitializeStrategy boardInitializeStrategy = new ManualBoardInitializeStrategy();
+    private final BoardInitializeStrategy boardInitializeStrategy = new ManualBoardInitializeStrategy();
 
     @Test
     void shouldGenerateManualBoard() {

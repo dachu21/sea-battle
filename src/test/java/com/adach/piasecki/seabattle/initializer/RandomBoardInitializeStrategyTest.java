@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class RandomBoardInitializeStrategyTest {
 
-    private BoardInitializeStrategy boardInitializeStrategy = new RandomBoardInitializeStrategy();
+    private final BoardInitializeStrategy boardInitializeStrategy = new RandomBoardInitializeStrategy();
 
     @Test
     void shouldGenerateRandomBoard() {

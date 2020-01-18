@@ -11,7 +11,7 @@ import static org.mockito.Mockito.when;
 
 class GameLogicProcessorTest {
 
-    private GameLogicProcessor gameLogicProcessor = new GameLogicProcessor();
+    private final GameLogicProcessor gameLogicProcessor = new GameLogicProcessor();
 
     @Test
     void shouldDecreaseHitsLeftAndIncreaseMoveCountWhenFieldHit() {
