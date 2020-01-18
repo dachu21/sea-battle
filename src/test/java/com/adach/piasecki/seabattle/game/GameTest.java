@@ -2,7 +2,6 @@ package com.adach.piasecki.seabattle.game;
 
 import com.adach.piasecki.seabattle.exception.InvalidInputException;
 import com.adach.piasecki.seabattle.initializer.BoardInitializeStrategy;
-import com.adach.piasecki.seabattle.input.Command;
 import com.adach.piasecki.seabattle.input.InputStrategy;
 import com.adach.piasecki.seabattle.model.Board;
 import com.adach.piasecki.seabattle.output.OutputStrategy;
@@ -27,8 +26,6 @@ class GameTest {
         OutputStrategy outputStrategy = mock(OutputStrategy.class);
         BoardInitializeStrategy boardInitializeStrategy = mock(BoardInitializeStrategy.class);
 
-        lenient().when(inputStrategy.waitForInput())
-            .thenReturn(new Command('A', 0));
         doNothing()
             .when(outputStrategy).displayMessage(any());
         doNothing()
