@@ -28,8 +28,16 @@ class StringCommandProcessorTest {
     }
 
     @Test
-    void shouldThrowExceptionForInvalidInput() {
-        String input = "!invalid";
+    void shouldThrowExceptionForInvalidColumn() {
+        String input = "!9";
+        assertThrows(InvalidInputException.class, () -> {
+            Command command = stringCommandProcessor.processCommand(input);
+        });
+    }
+
+    @Test
+    void shouldThrowExceptionForInvalidRow() {
+        String input = "C!";
         assertThrows(InvalidInputException.class, () -> {
             Command command = stringCommandProcessor.processCommand(input);
         });

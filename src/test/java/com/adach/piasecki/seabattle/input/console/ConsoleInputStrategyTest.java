@@ -18,11 +18,11 @@ class ConsoleInputStrategyTest {
         InputStream systemIn = System.in;
         try {
             System.setIn(new ByteArrayInputStream(input.getBytes()));
-            ConsoleInputStrategy consoleInputStrategy = new ConsoleInputStrategy();
-
-            Command command = consoleInputStrategy.waitForInput();
-            assertEquals('C', command.getColumn());
-            assertEquals(7, command.getRow());
+            try (ConsoleInputStrategy consoleInputStrategy = new ConsoleInputStrategy()) {
+                Command command = consoleInputStrategy.waitForInput();
+                assertEquals('C', command.getColumn());
+                assertEquals(7, command.getRow());
+            }
         } finally {
             System.setIn(systemIn);
         }
@@ -34,11 +34,11 @@ class ConsoleInputStrategyTest {
         InputStream systemIn = System.in;
         try {
             System.setIn(new ByteArrayInputStream(input.getBytes()));
-            ConsoleInputStrategy consoleInputStrategy = new ConsoleInputStrategy();
-
-            assertThrows(InvalidInputException.class, () -> {
-                Command command = consoleInputStrategy.waitForInput();
-            });
+            try (ConsoleInputStrategy consoleInputStrategy = new ConsoleInputStrategy()) {
+                assertThrows(InvalidInputException.class, () -> {
+                    Command command = consoleInputStrategy.waitForInput();
+                });
+            }
         } finally {
             System.setIn(systemIn);
         }
