@@ -12,7 +12,7 @@ abstract class ShipTest {
     abstract Ship createShip();
 
     @BeforeEach
-    void initialize() {
+    void setUp() {
         ship = createShip();
     }
 

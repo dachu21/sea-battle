@@ -12,7 +12,7 @@ abstract class FieldTest {
     abstract Field createField();
 
     @BeforeEach
-    void initialize() {
+    void setUp() {
         field = createField();
     }
 
