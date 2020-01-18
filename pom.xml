@@ -100,7 +100,7 @@
                                 <rule>
                                     <limits>
                                         <limit>
-                                            <minimum>1</minimum>
+                                            <minimum>0.8</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
