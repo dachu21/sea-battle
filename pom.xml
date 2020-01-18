@@ -22,6 +22,7 @@
         <junit.version>5.5.2</junit.version>
         <mockito.version>3.2.4</mockito.version>
 
+        <maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>
         <maven-shade-plugin.version>3.2.1</maven-shade-plugin.version>
     </properties>
 
@@ -53,12 +54,24 @@
             <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
-
-
     </dependencies>
 
     <build>
         <plugins>
+            <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <useFile>false</useFile>
+                    <includes>
+                        <include>**/*Test.java</include>
+                    </includes>
+                    <workingDirectory>${project.basedir}/testsWorkingDir</workingDirectory>
+                </configuration>
+            </plugin>
+
             <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-shade-plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
