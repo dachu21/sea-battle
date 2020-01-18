@@ -14,6 +14,6 @@ class ManualBoardInitializeStrategyTest {
         Board board = boardInitializeStrategy.initializeBoard();
         assertEquals(10, board.getHeight());
         assertEquals(10, board.getWidth());
-        assertEquals(2, board.getShips().size());
+        assertEquals(3, board.getShips().size());
     }
 }
