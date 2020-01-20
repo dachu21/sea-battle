@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -30,9 +31,9 @@ class GameEngineTest {
         InputStrategy inputStrategy = mock(InputStrategy.class);
         OutputStrategy outputStrategy = mock(OutputStrategy.class);
 
-        doNothing()
+        doReturn(true)
             .when(outputStrategy).drawBoard(any());
-        doNothing()
+        doReturn(true)
             .when(outputStrategy).displayMessage(any());
         doReturn(new Command('Z', 99),
             new Command('A', 0),
@@ -45,7 +46,7 @@ class GameEngineTest {
 
     @Test
     void shouldFinishGameSuccessfully() {
-        gameEngine.run();
+        assertTrue(gameEngine.run());
     }
 
     private Board prepareBoard() {

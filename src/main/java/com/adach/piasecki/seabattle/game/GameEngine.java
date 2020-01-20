@@ -24,7 +24,7 @@ class GameEngine {
         this.logicProcessor = new GameLogicProcessor();
     }
 
-    void run() {
+    boolean run() {
         GameStatus gameStatus = initializeGameStatus();
         displayBoard(board);
 
@@ -40,6 +40,7 @@ class GameEngine {
         }
 
         displayWinMessage(gameStatus);
+        return true;
     }
 
     private GameStatus initializeGameStatus() {

@@ -12,18 +12,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 class ConsoleOutputStrategyTest {
 
     private final ConsoleOutputStrategy consoleOutputStrategy = new ConsoleOutputStrategy();
 
     @Test
     void shouldDrawBoardSuccessfully() {
-        consoleOutputStrategy.drawBoard(prepareBoard());
+        assertTrue(consoleOutputStrategy.drawBoard(prepareBoard()));
     }
 
     @Test
     void shouldDisplayMessageSuccessfully() {
-        consoleOutputStrategy.displayMessage("Some message");
+        assertTrue(consoleOutputStrategy.displayMessage("Some message"));
     }
 
     private Board prepareBoard() {

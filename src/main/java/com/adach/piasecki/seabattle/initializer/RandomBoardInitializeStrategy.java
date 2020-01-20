@@ -1,18 +1,14 @@
 package com.adach.piasecki.seabattle.initializer;
 
 import com.adach.piasecki.seabattle.exception.BoardFileNotFoundException;
-import com.adach.piasecki.seabattle.model.Board;
-import com.adach.piasecki.seabattle.model.Field;
-import com.adach.piasecki.seabattle.model.HorizontalShip;
-import com.adach.piasecki.seabattle.model.Ship;
-import com.adach.piasecki.seabattle.model.VerticalShip;
+import com.adach.piasecki.seabattle.model.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -61,20 +57,35 @@ public class RandomBoardInitializeStrategy extends AbstractFileBoardInitializeSt
             shipList.add(firstShip);
             markOccupiedFields(occupiedFields, firstShip);
 
-            int verticalShipsGenerated = 1;
-            while (verticalShipsGenerated < verticalShipsNumber) {
-                for (int column = 0; column < width; column++) {
-                    final Ship newShip = generateRandomVerticalShipInColumn(height, column);
-                    if (checkIfShipFits(occupiedFields, newShip)) {
-                        shipList.add(newShip);
-                        markOccupiedFields(occupiedFields, newShip);
-                        verticalShipsGenerated++;
-                        break;
-                    }
+            shipList.addAll(generateVerticalShips(width, height, verticalShipsNumber, occupiedFields));
+        }
+
+        shipList.addAll(generateHorizontalShips(width, height, horizontalShipsNumber, occupiedFields));
+
+        return shipList;
+    }
+
+    private List<Ship> generateVerticalShips(final int width, final int height, final int verticalShipsNumber,
+                                             final boolean[][] occupiedFields) {
+        final List<Ship> shipList = new ArrayList<>();
+        int verticalShipsGenerated = 1;
+        while (verticalShipsGenerated < verticalShipsNumber) {
+            for (int column = 0; column < width; column++) {
+                final Ship newShip = generateRandomVerticalShipInColumn(height, column);
+                if (checkIfShipFits(occupiedFields, newShip)) {
+                    shipList.add(newShip);
+                    markOccupiedFields(occupiedFields, newShip);
+                    verticalShipsGenerated++;
+                    break;
                 }
             }
         }
+        return shipList;
+    }
 
+    private List<Ship> generateHorizontalShips(final int width, final int height, final int horizontalShipsNumber,
+                                             final boolean[][] occupiedFields) {
+        final List<Ship> shipList = new ArrayList<>();
         int horizontalShipsGenerated = 0;
         while (horizontalShipsGenerated < horizontalShipsNumber) {
             for (int row = 0; row < height; row++) {
@@ -87,7 +98,6 @@ public class RandomBoardInitializeStrategy extends AbstractFileBoardInitializeSt
                 }
             }
         }
-
         return shipList;
     }
 
@@ -128,7 +138,7 @@ public class RandomBoardInitializeStrategy extends AbstractFileBoardInitializeSt
     }
 
     private int randomIntFromRange(final int min, final int max) {
-        return new Random().nextInt(max - min) + min;
+        return new SecureRandom().nextInt(max - min) + min;
     }
 
     private int readHorizontalShipsNumber(final Scanner scanner) {

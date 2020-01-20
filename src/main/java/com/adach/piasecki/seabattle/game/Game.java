@@ -17,10 +17,11 @@ public class Game {
         this.gameEngine = new GameEngine(board, inputStrategy, outputStrategy);
     }
 
-    public void run() {
+    public boolean run() {
         outputStrategy.displayMessage("The game is starting...");
         gameEngine.run();
         finish();
+        return true;
     }
 
     private void finish() {

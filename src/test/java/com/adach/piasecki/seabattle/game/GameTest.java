@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collections;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -26,9 +27,9 @@ class GameTest {
         OutputStrategy outputStrategy = mock(OutputStrategy.class);
         BoardInitializeStrategy boardInitializeStrategy = mock(BoardInitializeStrategy.class);
 
-        doNothing()
+        doReturn(true)
             .when(outputStrategy).displayMessage(any());
-        doNothing()
+        doReturn(true)
             .when(outputStrategy).drawBoard(any());
         doReturn(new Board(0, 0, 0, Collections.emptyList(), Collections.emptyMap()))
             .when(boardInitializeStrategy).initializeBoard();
@@ -37,7 +38,7 @@ class GameTest {
     }
 
     @Test
-    void shouldSuccessfulyFinishRun() {
-        game.run();
+    void shouldSuccessfullyFinishRun() {
+        assertTrue(game.run());
     }
 }

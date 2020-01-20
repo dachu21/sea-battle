@@ -20,12 +20,13 @@ public class ConsoleOutputStrategy implements OutputStrategy {
     );
 
     @Override
-    public void drawBoard(final Board board) {
+    public boolean drawBoard(final Board board) {
         clearScreen();
         printColumnLabels(board);
         printRows(board);
         println();
         printShipsInfo(board);
+        return true;
     }
 
     private void printColumnLabels(final Board board) {
@@ -68,10 +69,11 @@ public class ConsoleOutputStrategy implements OutputStrategy {
     }
 
     @Override
-    public void displayMessage(final String message) {
+    public boolean displayMessage(final String message) {
         println();
         println(message);
         println();
+        return true;
     }
 
     private void clearScreen() {

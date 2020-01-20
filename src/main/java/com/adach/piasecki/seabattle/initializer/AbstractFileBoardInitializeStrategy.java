@@ -4,7 +4,7 @@ import com.adach.piasecki.seabattle.exception.UnsupportedBoardFileFormatExceptio
 
 import java.util.Scanner;
 
-abstract class AbstractFileBoardInitializeStrategy extends AbstractBoardInitializeStrategy {
+abstract class AbstractFileBoardInitializeStrategy implements AbstractBoardInitializeStrategy {
 
     private static final String WIDTH_PARAMETER = "width";
     private static final String HEIGHT_PARAMETER = "height";

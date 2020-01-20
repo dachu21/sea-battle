@@ -4,7 +4,7 @@ import com.adach.piasecki.seabattle.model.Board;
 
 public interface OutputStrategy {
 
-    void drawBoard(Board board);
+    boolean drawBoard(Board board);
 
-    void displayMessage(String message);
+    boolean displayMessage(String message);
 }
